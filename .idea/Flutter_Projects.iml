@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module type="JAVA_MODULE" version="4">
+  <component name="NewModuleRootManager" inherit-compiler-output="true">
+    <exclude-output />
+    <content url="file://$MODULE_DIR$">
+      <excludeFolder url="file://$MODULE_DIR$/nomadcoders/toonflix3/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/nomadcoders/toonflix3/build" />
+      <excludeFolder url="file://$MODULE_DIR$/nomadcoders/toonflix3/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/inflean/1.Other Materials/flutter-lv1-project-u-and-i-main/build" />
+      <excludeFolder url="file://$MODULE_DIR$/inflean/1.Other Materials/flutter-lv1-project-u-and-i-main/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/inflean/1.Other Materials/flutter-lv1-project-u-and-i-main/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/inflean/image_carousel/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/inflean/image_carousel/build" />
+      <excludeFolder url="file://$MODULE_DIR$/inflean/image_carousel/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/nomadcoders/pomodoro/build" />
+      <excludeFolder url="file://$MODULE_DIR$/nomadcoders/pomodoro/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/nomadcoders/pomodoro/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/inflean/u_and_i/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/inflean/u_and_i/build" />
+      <excludeFolder url="file://$MODULE_DIR$/inflean/u_and_i/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/inflean/vid_player/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/inflean/vid_player/build" />
+      <excludeFolder url="file://$MODULE_DIR$/inflean/vid_player/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/inflean/const_constructor/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/inflean/const_constructor/build" />
+      <excludeFolder url="file://$MODULE_DIR$/inflean/const_constructor/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/inflean/row_and_column/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/inflean/row_and_column/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/inflean/row_and_column/build" />
+      <excludeFolder url="file://$MODULE_DIR$/inflean/random_number_generator/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/inflean/random_number_generator/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/inflean/random_number_generator/build" />
+      <excludeFolder url="file://$MODULE_DIR$/inflean/navigation/build" />
+      <excludeFolder url="file://$MODULE_DIR$/inflean/navigation/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/inflean/navigation/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/nomadcoders/toonflix/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/nomadcoders/toonflix/build" />
+      <excludeFolder url="file://$MODULE_DIR$/nomadcoders/toonflix/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/nomadcoders/toonflix2/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/nomadcoders/toonflix2/build" />
+      <excludeFolder url="file://$MODULE_DIR$/nomadcoders/toonflix2/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/inflean/web_view/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/inflean/web_view/build" />
+      <excludeFolder url="file://$MODULE_DIR$/inflean/web_view/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/inflean/1.Other Materials/flutter-lv1-project-random-number-generator-main/build" />
+      <excludeFolder url="file://$MODULE_DIR$/inflean/1.Other Materials/flutter-lv1-project-random-number-generator-main/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/inflean/1.Other Materials/flutter-lv1-project-random-number-generator-main/.pub" />
+    </content>
+    <orderEntry type="inheritedJdk" />
+    <orderEntry type="sourceFolder" forTests="false" />
+  </component>
+</module>
