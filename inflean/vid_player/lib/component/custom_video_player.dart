@@ -1,3 +1,4 @@
+import 'dart:ffi';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -6,7 +7,12 @@ import 'package:video_player/video_player.dart';
 
 class CustomVideoPlayer extends StatefulWidget {
   final XFile video;
-  const CustomVideoPlayer({required this.video, super.key});
+  final VoidCallback onNewVideoPressed;
+  const CustomVideoPlayer({
+    required this.video,
+    required this.onNewVideoPressed,
+    super.key,
+  });
 
   @override
   State<CustomVideoPlayer> createState() => _CustomVideoPlayerState();
@@ -14,6 +20,8 @@ class CustomVideoPlayer extends StatefulWidget {
 
 class _CustomVideoPlayerState extends State<CustomVideoPlayer> {
   VideoPlayerController? videoController;
+  Duration currentPosition = const Duration();
+  bool showControls = false;
 
   @override
   void initState() {
@@ -36,10 +44,28 @@ class _CustomVideoPlayerState extends State<CustomVideoPlayer> {
     initializeController();
   }
 
+  @override
+  void didUpdateWidget(covariant CustomVideoPlayer oldWidget) {
+    super.didUpdateWidget(oldWidget);
+
+    if (oldWidget.video.path != widget.video.path) {
+      initializeController();
+    }
+  }
+
   initializeController() async {
+    currentPosition = const Duration();
     videoController = VideoPlayerController.file(
       File(widget.video.path),
     );
+
+    videoController!.addListener(() {
+      final currentPosition = videoController!.value.position;
+
+      setState(() {
+        this.currentPosition = currentPosition;
+      });
+    });
 
     await videoController!.initialize();
 
@@ -62,32 +88,44 @@ class _CustomVideoPlayerState extends State<CustomVideoPlayer> {
     // 그러면 해당 비디오의 비율이 그대로 휴대폰 화면에 나오게 된다.
     return AspectRatio(
       aspectRatio: videoController!.value.aspectRatio,
-      child: Stack(
-        children: [
-          VideoPlayer(
-            videoController!,
-          ),
-          _Controls(
-            onReversePressed: onReversePressed,
-            onPlayPressed: onPlayPressed,
-            onForwardPressed: onForwardPressed,
-            isPlaying: videoController!.value.isPlaying,
-          ),
-          // 위치를 지정해주는 위젯
-          // 아이콘 버튼 위젯을 전체 위치를 기준으로 했을 때 오른쪽 끝에 위치해주고 싶다면
-          // right : 0
-          Positioned(
-            right: 0, // 오른쪽 끝에서부터 0 픽셀 이동을 시킨다는 뜻.
-            child: IconButton(
-              onPressed: () {},
-              color: Colors.white,
-              iconSize: 30.0,
-              icon: const Icon(
-                Icons.photo_camera_back,
-              ),
+      child: GestureDetector(
+        onTap: () => setState(() {
+          showControls = !showControls;
+        }),
+        child: Stack(
+          children: [
+            VideoPlayer(
+              videoController!,
             ),
-          ),
-        ],
+            if (showControls)
+              _Controls(
+                onReversePressed: onReversePressed,
+                onPlayPressed: onPlayPressed,
+                onForwardPressed: onForwardPressed,
+                isPlaying: videoController!.value.isPlaying,
+              ),
+            // 위치를 지정해주는 위젯
+            // 아이콘 버튼 위젯을 전체 위치를 기준으로 했을 때 오른쪽 끝에 위치해주고 싶다면
+            // right : 0
+            if (showControls)
+              _NewVideo(
+                onPressed: widget.onNewVideoPressed,
+              ),
+
+            _SliderBottom(
+                currentPosition: currentPosition,
+                videoController: videoController,
+                onSliderChanged: onSliderChanged),
+          ],
+        ),
+      ),
+    );
+  }
+
+  void onSliderChanged(double val) {
+    videoController!.seekTo(
+      Duration(
+        seconds: val.toInt(),
       ),
     );
   }
@@ -135,6 +173,56 @@ class _CustomVideoPlayerState extends State<CustomVideoPlayer> {
   }
 }
 
+class _SliderBottom extends StatelessWidget {
+  const _SliderBottom({
+    required this.currentPosition,
+    required this.videoController,
+    required this.onSliderChanged,
+  });
+
+  final Duration currentPosition;
+  final VideoPlayerController? videoController;
+  final ValueChanged<double> onSliderChanged;
+
+  @override
+  Widget build(BuildContext context) {
+    return Positioned(
+      bottom: 0,
+      right: 0,
+      left: 0,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(
+          horizontal: 8.0,
+        ),
+        child: Row(
+          children: [
+            Text(
+              '${currentPosition.inMinutes}:${(currentPosition.inSeconds % 60).toString().padLeft(2, '0')}',
+              style: const TextStyle(
+                color: Colors.white,
+              ),
+            ),
+            Expanded(
+              child: Slider(
+                value: currentPosition.inSeconds.toDouble(),
+                onChanged: onSliderChanged,
+                max: videoController!.value.duration.inSeconds.toDouble(),
+                min: 0,
+              ),
+            ),
+            Text(
+              '${videoController!.value.duration.inMinutes}:${(videoController!.value.duration.inSeconds % 60).toString().padLeft(2, '0')}',
+              style: const TextStyle(
+                color: Colors.white,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
 class _Controls extends StatelessWidget {
   final VoidCallback onPlayPressed;
   final VoidCallback onReversePressed;
@@ -152,9 +240,9 @@ class _Controls extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       color: Colors.black.withOpacity(0.5),
+      height: MediaQuery.of(context).size.height,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           renderIconButton(
             onPressed: onReversePressed,
@@ -183,6 +271,26 @@ class _Controls extends StatelessWidget {
       color: Colors.white,
       icon: Icon(
         iconData,
+      ),
+    );
+  }
+}
+
+class _NewVideo extends StatelessWidget {
+  final VoidCallback onPressed;
+  const _NewVideo({required this.onPressed});
+
+  @override
+  Widget build(BuildContext context) {
+    return Positioned(
+      right: 0, // 오른쪽 끝에서부터 0 픽셀 이동을 시킨다는 뜻.
+      child: IconButton(
+        onPressed: onPressed,
+        color: Colors.white,
+        iconSize: 30.0,
+        icon: const Icon(
+          Icons.photo_camera_back,
+        ),
       ),
     );
   }
