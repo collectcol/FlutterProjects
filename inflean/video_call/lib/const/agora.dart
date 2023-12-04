@@ -1,5 +1,5 @@
-const APP_ID = "";
+const appId = "";
 
-const CHANNEL_NAME = "testChannel";
+const channelName = "testChannel";
 
-const TEMP_TOKEN = "";
+const tempToken = "";
